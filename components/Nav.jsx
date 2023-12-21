@@ -6,17 +6,17 @@ import Image from 'next/image';
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
 
 const Nav = () => {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
+  const { data: session } = useSession()
   const [toggleDropdown, setToggleDropdown] = useState(false)
   const [providers, setProviders] = useState(null);
 
   useEffect(() => {
     
-    const setProvider = async()=>{
+    const setUpProviders = async()=>{
       const response = await getProviders();  
       setProviders(response);
     }
-    setProviders();
+    setUpProviders();
   }, [])
   
   return (
@@ -33,7 +33,7 @@ const Nav = () => {
       </Link>
       {/* Desktop Navigation  */}
       <div className="sm:flex hidden">
-        {isUserLoggedIn?(
+        {session?.user?(
         <div className="flex gap-3 md:gap-5">
           <Link href="/create-prompt" className="black_btn">
             Create Post 
@@ -43,7 +43,7 @@ const Nav = () => {
           </button>
           <Link href="/profile">
             <Image
-            src="/assets/images/logo.svg"
+            src={session?.user.image}
             width={37}
             height={37}
             className="rounded-full"
@@ -60,18 +60,19 @@ const Nav = () => {
             onClick={()=>signIn(provider.id)}
             className='black_btn'
           >
-          </button>
+            Sign In
+          </button>  
         ))}
         </>
         )}
       </div>
       {/* Mobile Navigation */}
       <div className='sm:hidden flex relative'>
-        {isUserLoggedIn?(
+        {session?.user?(
           <div className="flex">
             <Image
               className="rounded-full"
-              src="/assets/images/logo.svg"
+              src={session?.user.image}
               width={37}
               height={37}
               alt="profile"
@@ -113,6 +114,7 @@ const Nav = () => {
             onClick={()=>signIn(provider.id)}
             className='black_btn'
           >
+            Sign In
           </button>
         ))}
         </>
