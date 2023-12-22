@@ -2,7 +2,7 @@
 
 import {useState, useEffect} from 'react'
 import Link from 'next/link';
-import Image from 'next/image';
+import Image from 'next/Image';
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
 
 const Nav = () => {
@@ -11,14 +11,14 @@ const Nav = () => {
   const [providers, setProviders] = useState(null);
 
   useEffect(() => {
-    
+
     const setUpProviders = async()=>{
-      const response = await getProviders();  
+      const response = await getProviders();
       setProviders(response);
     }
     setUpProviders();
   }, [])
-  
+
   return (
     <nav className="flex-between w-full mb-16 pt-3">
       <Link href="/" className="flex flex-center gap-2">
@@ -61,7 +61,7 @@ const Nav = () => {
             className='black_btn'
           >
             Sign In
-          </button>  
+          </button>
         ))}
         </>
         )}
@@ -78,23 +78,23 @@ const Nav = () => {
               alt="profile"
               onClick={()=>(setToggleDropdown((prev)=>!prev))}
             />
-           {toggleDropdown && <div className="dropdown">
-              <Link 
+            {toggleDropdown && <div className="dropdown">
+              <Link
                 className="dropdown_link"
                 href="/profile"
                 onClick={()=>setToggleDropdown(false)}
               >
               My Profile
               </Link>
-              <Link 
+              <Link
                 className="dropdown_link"
                 href="/create-prompt"
                 onClick={()=>setToggleDropdown(false)}
               >
               Create Prompt
               </Link>
-              <button 
-                className="black_btn w-full mt-5" 
+              <button
+                className="black_btn w-full mt-5"
                 type="button"
                 onClick={()=>{
                   setToggleDropdown(false)
