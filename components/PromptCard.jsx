@@ -1,7 +1,7 @@
 "use client"
 
 import {useState} from 'react'
-import  Image  from "next/Image";
+import  Image  from "next/image";
 import { usePathname,useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
